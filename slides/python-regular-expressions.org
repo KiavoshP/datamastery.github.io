@@ -1,0 +1,238 @@
+#+TITLE: Regular Expressions
+#+AUTHOR:
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS: H:2 toc:nil num:t
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smaller]
+#+LaTeX_HEADER: \usepackage{verbatim, multicol, tabularx,color,upquote}
+#+LaTeX_HEADER: \usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
+#+LaTeX_HEADER: \lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\footnotesize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true, keywordstyle=\bf, stringstyle=\color{blue}, commentstyle=\color{green}}
+#+LaTeX_HEADER: \setbeamertemplate{footline}[frame number]
+#+LaTeX_HEADER: \hypersetup{colorlinks=true,urlcolor=blue}
+#+LaTeX_HEADER: \logo{\includegraphics[height=.75cm]{GeorgiaTechLogo-black-gold.png}}
+
+* Regular Expressions
+
+#+ATTR_LaTeX: :height .9\textheight
+[[file:regular_expressions.png]]
+
+[[https://xkcd.com/208/][https://xkcd.com/208/]]
+
+** Regular Expressions
+
+In computer science, a language is a set of strings. Like any set, a language can be specified by enumeration (listing all the elements) or with a rule (or set of rules).
+
+- A regular language is specified with a regular expression.
+- We use a regular expression, or pattern, to test whether a string "matches" the specification, i.e., whether it is in the language.
+
+Python provides regular expression matching operations in the re module.
+
+For a gentle introduction to Python regular expressions, see [[https://docs.python.org/3/howto/regex.html][Python Regualr Expression HOWTO]]
+
+** Matching with ~match()~
+
+Every string is a regular expression, so let's explore the [[https://docs.python.org/3/library/re.html][re]] module using simple string patterns.
+
+~re~ 's ~match(pattern, string)~ function applies a pattern to a string:
+
+#+BEGIN_SRC python
+>>> re.match(r'foo', 'foobar')
+<_sre.SRE_Match object; span=(0, 3), match='foo'>
+>>> re.match(r'oo', 'foobar')
+#+END_SRC
+
+~match~ returns a ~Match~ object if the string *begins* with the pattern, or ~None~ if it does not.
+
+Notice that we use a special raw string syntax for regular expressions because normal Python strings use backslash (\) as an escape character but regexes use backslash extensively, so usgin raw strings avoids having to double-escape special regex forms that use backslash.
+
+** Finding Matches with ~search()~ and ~findall()~
+
+~search(pattern, string)~ is like ~match~, but it finds the first occurrence of pattern in string, wherever it occurs in the string (not just the beginning).
+
+#+BEGIN_SRC python
+>>> re.match(r'oo', 'foobar')
+>>> re.search(r'oo', 'foobar')
+<_sre.SRE_Match object; span=(1, 3), match='oo'>
+#+END_SRC
+
+Note the ~span=(1, 3)~ in the returned match object. It specifies the location within the string that contained the match, using the same indexing scheme used in slices, i.e., from beginning index inclusive to ending index exclusive.
+
+~findall~ returns a list of substrings matched by the regex pattern.
+
+#+BEGIN_SRC python
+>>> re.findall(r'na', 'nana nana nana nana Batman!')
+['na', 'na', 'na', 'na', 'na', 'na', 'na', 'na']
+#+END_SRC
+
+** The Match Object
+
+The ~match~ and ~search~ funtions return a Match object. The important methods on the ~Match~ object are:
+
+- ~group()~ returns the string matched by the regex
+- ~start()~ returns the starting position of the match
+- ~end()~ returns the ending position of the match
+- ~span()~ returns a tuple containing the (start, end) positions of the match
+
+For example:
+
+#+BEGIN_SRC python
+>>> re.search(r'oo', 'foobar')
+<_sre.SRE_Match object; span=(1, 3), match='oo'>
+>>> m.group()
+'oo'
+>>> m.span()
+(1, 3)
+>>> m.start()
+1
+#+END_SRC
+
+** Using the Match Object
+
+Since  ~match~ and ~search~ return a ~Match~ object if a match is found, or ~None~ if no match is found, a common programming idiom is to test the ~Match~ object directly.
+
+#+BEGIN_SRC python
+>>> m = re.match(r'foo', 'foobar')
+>>> if m:
+...     print('Match found: ' + m.group())
+...
+Match found: oo
+#+END_SRC
+
+Most of the examples in this lecture will use ~findall~ for simplicity and to demonstrate multiple matches in a single string.
+
+** Metacharacters
+
+Regexes are much more powerful when you add metacharacters. We'll learn the basics of:
+
+- ~.~ - Match any character
+- ~\~ - Escape special characters
+- ~|~ - Or operator
+- ~^~ - Match at the beginning of a string/line
+- ~$~ - Match at the end of a string/line
+- ~*~ - Match 0 or more of the preceding regex
+- ~+~ - Match 1 or more of the preceding regex
+- ~?~ - Match 0 or 1 of the preceding regex
+- ~{ }~ - Bounded repetition
+- ~[ ]~ - Character class
+- ~( )~ - Capture group within a matched substring
+
+** Patterns with Metacharacters
+
+~.~ matches any single character. This example also demonstrates that ~findall~ finds *non-overlapping* matches.
+
+#+BEGIN_SRC python
+>>> re.findall(r'a.a', 'abracadabra')
+['aca']
+>>> re.findall(r'a.a', 'abra abra cadabra')
+['a a', 'ada']
+#+END_SRC
+
+~\~ escape special characters so we can match them in strings.
+
+#+BEGIN_SRC python
+>>> re.search(r'C:\\>', '$ C:\> >>>')
+<_sre.SRE_Match object; span=(2, 6), match='C:\\>'>
+#+END_SRC
+
+~^~ and ~$~ match at the beginning or end of a string/line.
+
+#+BEGIN_SRC python
+>>> re.search(r'^na', 'nana nana nana nana Batman!')
+<_sre.SRE_Match object; span=(0, 2), match='na'>
+>>> re.search(r'na$', 'nana nana nana nana')
+<_sre.SRE_Match object; span=(17, 19), match='na'>
+#+END_SRC
+
+** Repetition
+
+~*~ matches 0 or more of the preceding regex
+
+#+BEGIN_SRC python
+>>> re.findall(r'a.a*', 'abra abra cadabra')
+['ab', 'a a', 'a ', 'ada']
+#+END_SRC
+
+~+~ matches 1 or more of the preceding regex
+
+#+BEGIN_SRC python
+>>> re.findall(r'a.+a', 'abra abra cadabra')
+['abra abra cadabra']
+#+END_SRC
+
+
+Notice that ~.+~ performed a greedy match - it matched as many characters as possible. We can make it non-greedy by adding a ~?~:
+
+#+BEGIN_SRC python
+>>> re.findall(r'a.+?a', 'abra abra cadabra')
+['abra', 'abra', 'ada']
+#+END_SRC
+
+~?~ after an ordinary character matches 0 or 1 of them
+
+#+BEGIN_SRC python
+>>> re.findall(r'ab?a', 'aba anna abba aa')
+['aba', 'aa']
+#+END_SRC
+
+
+~{ }~ bounds the repetition by an arbitray number
+
+#+BEGIN_SRC python
+>>> re.findall(r'ab{2}a', 'aba anna abba abbba')
+['abba']
+#+END_SRC
+
+** Character Classes and Alternatives
+
+~[ ]~ creates an arbitrary character class
+
+#+BEGIN_SRC python
+>>> re.findall(r'[rmpl]ain', 'the rain in spain falls mainly in the plain')
+['rain', 'pain', 'main', 'lain']
+#+END_SRC
+
+You can specify ranges of characters in a character class.
+
+#+BEGIN_SRC python
+>>> re.findall(r'[0-9]+', '500 Tech Parkway, Atlanta, GA 30332')
+['500', '30332']
+#+END_SRC
+
+You can specify alternative patterns to match with ~|~, which you can read as "or."
+
+#+BEGIN_SRC python
+>>> re.findall(r'rain|plain', 'the rain in spain falls mainly in the plain')
+['rain', 'plain']
+#+END_SRC
+
+** Predefined Character Classes
+
+Character classes are useful, so several are predefined.
+
+- ~\d~ Matches any decimal digit; this is equivalent to the class ~[0-9]~.
+- ~\D~ Matches any non-digit character; this is equivalent to the class ~[^0-9]~.
+- ~\s~ Matches any whitespace character; this is equivalent to the class ~[ \t\n\r\f\v]~.
+- ~\S~ Matches any non-whitespace character; this is equivalent to the class ~[^ \t\n\r\f\v]~.
+- ~\w~ Matches any alphanumeric character; this is equivalent to the class ~[a-zA-Z0-9_]~.
+- ~\W~ Matches any non-alphanumeric character; this is equivalent to the class ~[^a-zA-Z0-9_]~.
+
+** Match Capture Groups
+
+Capture groups allow you to match on a pattern but capture a substring of what was matched. This is particularly useful in extracting element text from XML-like documents where your pattern includes the open and close tags but you only want the text between the tags.
+
+#+BEGIN_SRC python
+>>> activities = '''
+... <ul>
+... <li>eat</li>
+... <li>sleep</li>
+... <li>code</li>
+... </ul>'''
+>>> re.findall(r'<li>(.+)</li>', activities)
+['eat', 'sleep', 'code']
+#+END_SRC

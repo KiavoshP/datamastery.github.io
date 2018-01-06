@@ -1,0 +1,767 @@
+#+TITLE: Pandas
+#+AUTHOR: Data Manipulation in Python
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS: H:2 toc:nil num:t
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smaller]
+#+LaTeX_HEADER: \usepackage{verbatim, multicol, tabularx,}
+#+LaTeX_HEADER: \usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
+#+LaTeX_HEADER: \lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\scriptsize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true}
+#+LaTeX_HEADER: \setbeamertemplate{footline}[frame number]
+#+LaTeX_HEADER: \hypersetup{colorlinks=true,urlcolor=blue}
+#+LaTeX_HEADER: \logo{\includegraphics[height=.75cm]{GeorgiaTechLogo-black-gold.png}}
+
+* Pandas
+
+** Pandas
+
+- Built on NumPy
+- Adds data structures and data manipulation tools
+- Enables easier data cleaning and analysis
+
+#+BEGIN_SRC python
+import pandas as pd
+#+END_SRC
+
+** Pandas Fundamentals
+
+Three fundamental Pandas data structures:
+
+- ~Series~ - a one-dimensional array of values indexed by a ~pd.Index~
+- ~Index~ - an array-like object used to access elements of a ~Series~ or ~DataFrame~
+- ~DataFrame~ - a two-dimensional array with flexible row indices and column names
+
+** Series from List
+
+#+BEGIN_SRC python
+In [4]: data = pd.Series(['a','b','c','d'])
+
+In [5]: data
+Out[5]:
+0    a
+1    b
+2    c
+3    d
+dtype: object
+#+END_SRC
+
+The 0..3 in the left column are the ~pd.Index~ for ~data~:
+
+#+BEGIN_SRC python
+In [7]: data.index
+Out[7]: RangeIndex(start=0, stop=4, step=1)
+#+END_SRC
+
+The elements from the Python list we passed to the ~pd.Series~ constructor make up the values:
+
+#+BEGIN_SRC python
+In [8]: data.values
+Out[8]: array(['a', 'b', 'c', 'd'], dtype=object)
+#+END_SRC
+Notice that the values are stored in a Numpy array.
+
+** Series from Sequence
+
+You can construct a list from any definite sequence:
+
+#+BEGIN_SRC python
+In [24]: pd.Series(np.loadtxt('exam1grades.txt'))
+Out[24]:
+0       72.0
+1       72.0
+2       50.0
+...
+134     87.0
+dtype: float64
+#+END_SRC
+
+or
+
+#+BEGIN_SRC python
+In [25]: pd.Series(open('exam1grades.txt').readlines())
+Out[25]:
+0       72\n
+1       72\n
+2       50\n
+...
+134     87\n
+dtype: object
+#+END_SRC
+
+... but not an indefinite sequence:
+
+#+BEGIN_SRC python
+In [26]: pd.Series(open('exam1grades.txt'))
+...
+TypeError: object of type '_io.TextIOWrapper' has no len()
+#+END_SRC
+
+** Series from Dictionary
+
+#+BEGIN_SRC python
+salary = {"Data Scientist": 110000,
+          "DevOps Engineer": 110000,
+          "Data Engineer": 106000,
+          "Analytics Manager": 112000,
+          "Database Administrator": 93000,
+          "Software Architect": 125000,
+          "Software Engineer": 101000,
+          "Supply Chain Manager": 100000}
+#+END_SRC
+Create a ~pd.Series~ from a ~dict~: [fn:1]
+
+#+BEGIN_SRC python
+In [14]: salary_data = pd.Series(salary)
+
+In [15]: salary_data
+Out[15]:
+Analytics Manager         112000
+Data Engineer             106000
+Data Scientist            110000
+Database Administrator     93000
+DevOps Engineer           110000
+Software Architect        125000
+Software Engineer         101000
+Supply Chain Manager      100000
+dtype: int64
+#+END_SRC
+
+The index is a sorted sequence of the keys of the dictionary passed to ~pd.Series~
+
+[fn:1] [[https://www.glassdoor.com/List/Best-Jobs-in-America-LST_KQ0,20.htm][https://www.glassdoor.com/List/Best-Jobs-in-America-LST_KQ0,20.htm]]
+
+** Series with Custom Index
+
+General form of Series constructor is ~pd.Series(data, index=index)~
+
+- Default is integer sequence for sequence data and sorted keys of dictionaries
+- Can provide a custom index:
+
+#+BEGIN_SRC python
+In [29]: pd.Series([1,2,3], index=['a', 'b', 'c'])
+Out[29]:
+a    1
+b    2
+c    3
+dtype: int64
+#+END_SRC
+
+The index object itself is an immutable array with set operations.
+
+#+BEGIN_SRC python
+In [30]: i1 = pd.Index([1,2,3,4])
+
+In [31]: i2 = pd.Index([3,4,5,6])
+
+In [32]: i1[1:3]
+Out[32]: Int64Index([2, 3], dtype='int64')
+
+In [33]: i1 & i2 # intersection
+Out[33]: Int64Index([3, 4], dtype='int64')
+
+In [34]: i1 | i2 # union
+Out[34]: Int64Index([1, 2, 3, 4, 5, 6], dtype='int64')
+
+In [35]: i1 ^ i2 # symmetric difference
+Out[35]: Int64Index([1, 2, 5, 6], dtype='int64')
+#+END_SRC
+
+** Series Indexing and Slicing
+
+Indexing feels like dictionary access due to flexible index objects:
+
+#+BEGIN_SRC python
+In [37]: data = pd.Series(['a', 'b', 'c', 'd'])
+
+In [38]: data[0]
+Out[38]: 'a'
+
+In [39]: salary_data['Software Engineer']
+Out[39]: 101000
+#+END_SRC
+
+But you can also slice using these flexible indices:
+#+BEGIN_SRC python
+In [40]: salary_data['Data Scientist':'Software Engineer']
+Out[40]:
+Data Scientist            110000
+Database Administrator     93000
+DevOps Engineer           110000
+Software Architect        125000
+Software Engineer         101000
+dtype: int64
+#+END_SRC
+
+** DataFrame
+
+The simplest way to create a DataFrame is with a dictionary of dictionaries:
+#+BEGIN_SRC python
+In [42]: jobs = pd.DataFrame({'salary': salary, 'openings': openings})
+
+In [43]: jobs
+Out[43]:
+                        openings  salary
+Analytics Manager           1958  112000
+Data Engineer               2599  106000
+Data Scientist              4184  110000
+Database Administrator      2877   93000
+DevOps Engineer             2725  110000
+Software Architect          2232  125000
+Software Engineer          17085  101000
+Supply Chain Manager        1270  100000
+UX Designer                 1691   92500
+#+END_SRC
+
+#+BEGIN_SRC python
+In [46]: jobs.index
+Out[46]:
+Index(['Analytics Manager', 'Data Engineer', 'Data Scientist',
+       'Database Administrator', 'DevOps Engineer', 'Software Architect',
+       'Software Engineer', 'Supply Chain Manager', 'UX Designer'],
+      dtype='object')
+
+In [47]: jobs.columns
+Out[47]: Index(['openings', 'salary'], dtype='object')
+#+END_SRC
+
+** Simple DataFrame Indexing
+
+Simplest indexing of DataFrame is by column name.
+
+#+BEGIN_SRC python
+In [48]: jobs['salary']
+Out[48]:
+Analytics Manager         112000
+Data Engineer             106000
+Data Scientist            110000
+Database Administrator     93000
+DevOps Engineer           110000
+Software Architect        125000
+Software Engineer         101000
+Supply Chain Manager      100000
+UX Designer                92500
+Name: salary, dtype: int64
+#+END_SRC
+
+
+Each colum is a Series:
+#+BEGIN_SRC python
+In [49]: type(jobs['salary'])
+Out[49]: pandas.core.series.Series
+#+END_SRC
+
+
+** General Row Indexing
+
+The ~loc~ indexer indexes by row name:
+#+BEGIN_SRC python
+In [13]: jobs.loc['Software Engineer']
+Out[13]:
+openings     17085
+salary      101000
+Name: Software Engineer, dtype: int64
+
+In [14]: jobs.loc['Data Engineer':'Databse Administrator']
+Out[14]:
+                        openings  salary
+Data Engineer               2599  106000
+Data Scientist              4184  110000
+Database Administrator      2877   93000
+#+END_SRC
+
+Note that slice ending is inclusive when indexing by name.
+
+The ~iloc~ indexer indexes rows by position:
+#+BEGIN_SRC python
+In [15]: jobs.iloc[1:3]
+Out[15]:
+                openings  salary
+Data Engineer       2599  106000
+Data Scientist      4184  110000
+#+END_SRC
+
+Note that slice ending is exclusive when indexing by integer position.
+
+
+** Special Case Row Indexing
+
+#+BEGIN_SRC python
+In [16]: jobs[:2]
+Out[16]:
+                   openings  salary
+Analytics Manager      1958  112000
+Data Engineer          2599  106000
+
+In [17]: jobs[jobs['salary'] > 100000]
+Out[17]:
+                    openings  salary
+Analytics Manager       1958  112000
+Data Engineer           2599  106000
+Data Scientist          4184  110000
+DevOps Engineer         2725  110000
+Software Architect      2232  125000
+Software Engineer      17085  101000
+#+END_SRC
+
+These are shortcuts for ~loc~ and ~iloc~ indexing:
+
+#+BEGIN_SRC python
+In [20]: jobs.iloc[:2]
+Out[20]:
+                   openings  salary
+Analytics Manager      1958  112000
+Data Engineer          2599  106000
+
+In [21]: jobs.loc[jobs['salary'] > 100000]
+Out[21]:
+                    openings  salary
+Analytics Manager       1958  112000
+Data Engineer           2599  106000
+Data Scientist          4184  110000
+DevOps Engineer         2725  110000
+Software Architect      2232  125000
+Software Engineer      17085  101000
+#+END_SRC
+
+** Adding Columns
+
+Add column by broadcasting a single value:
+#+BEGIN_SRC python
+In [23]: jobs['CS2316 prepares'] = True
+Out[23]:
+                        openings  salary 2316 Prepares
+Analytics Manager           1958  112000          True
+Data Engineer               2599  106000          True
+Data Scientist              4184  110000          True
+Database Administrator      2877   93000          True
+DevOps Engineer             2725  110000          True
+Software Architect          2232  125000          True
+Software Engineer          17085  101000          True
+Supply Chain Manager        1270  100000          True
+#+END_SRC
+
+Add column by computing value based on row's data:
+#+BEGIN_SRC python
+In [24]: jobs['6 Figures'] = jobs['salary'] > 100000
+
+In [25]: jobs
+Out[25]:
+                        openings  salary 2316 Prepares 6 Figures
+Analytics Manager           1958  112000          True      True
+Data Engineer               2599  106000          True      True
+Data Scientist              4184  110000          True      True
+Database Administrator      2877   93000          True     False
+DevOps Engineer             2725  110000          True      True
+Software Architect          2232  125000          True      True
+Software Engineer          17085  101000          True      True
+Supply Chain Manager        1270  100000          True     False
+#+END_SRC
+
+** CSV Files
+
+Pandas has a very powerful CSV reader. Do this in iPython (or ~help(pd.read_csv)~ in Python):
+
+#+BEGIN_SRC python
+pd.read_csv?
+#+END_SRC
+
+Now let's read the [[http://cs2316.gatech.edu/exercises/super-grades.csv][~super-grades.csv~]] file and re-do [[http://cs2316.gatech.edu/exercises/calc-grades.html][Calc Grades]] exercise using Pandas.
+
+
+** Read a CSV File into a DataFrame
+
+~super-grades.csv~ contains:
+#+BEGIN_SRC python
+Student,Exam 1,Exam 2,Exam 3
+Thorny,100,90,80
+Mac,88,99,111
+Farva,45,56,67
+Rabbit,59,61,67
+Ursula,73,79,83
+Foster,89,97,101
+#+END_SRC
+
+The first line is a header, which Pandas will infer, and we want to use the first column for index values:
+
+#+BEGIN_SRC python
+sgs = pd.read_csv('super-grades.csv', index_col=0)
+#+END_SRC
+
+Now we have the DataFrame we want:
+
+#+BEGIN_SRC python
+In [3]: sgs = pd.read_csv('super-grades.csv', index_col=0)
+
+In [4]: sgs
+Out[4]:
+         Exam 1  Exam 2  Exam 3
+Student
+Thorny      100      90      80
+Mac          88      99     111
+Farva        45      56      67
+Rabbit       59      61      67
+Ursula       73      79      83
+Foster       89      97     101
+#+END_SRC
+
+** Adding a Column to a DataFrame
+
+We've seen how to add a column broadcast from a scalar value or a simple calculation from another column. Now let's add a column with the average grades for each student. We'll build this up in 3 steps:
+
+1. Find the average of a single student's grades.
+2. Create a dictionary mapping all students to their averages.
+3. Create a ~pd.Series~ object from this dictionary.
+4. Add this dictionary to our ~sgs~ ~pd.DataFrame~.
+
+** Operating on a Row of a DataFrame
+
+We already know how to find the average of a single student's grades:
+
+#+BEGIN_SRC python
+In [5]: np.mean(sgs.loc['Thorny'])
+Out[5]: 90.0
+#+END_SRC
+
+~Thorny~ is one of the row (~loc~) indexes. We get all the row index values with:
+
+#+BEGIN_SRC python
+In [6]: sgs.index
+Out[6]: Index(['Thorny', 'Mac', 'Farva', 'Rabbit', 'Ursula', 'Foster'], dtype='object', name='Student')
+#+END_SRC
+
+We can iterate over the index values and create a dictionary mapping all students to their averages.
+
+#+BEGIN_SRC python
+In [7]: {stud: np.mean(sgs.loc[stud]) for stud in sgs.index}
+Out[7]:
+{'Farva': 56.0,
+ 'Foster': 95.666666666666671,
+ 'Mac': 99.333333333333329,
+ 'Rabbit': 62.333333333333336,
+ 'Thorny': 90.0,
+ 'Ursula': 78.333333333333329}
+#+END_SRC
+
+** Concatenate a Series to a DataFrame
+
+Now that we know how to create a dictionay of student averages, we create a ~pd.Series~ object from it so we can concatenate the Series to our DataFrame.
+
+#+BEGIN_SRC python
+In [8]: avgs = pd.Series({stud: np.mean(sgs.loc[stud]) for stud in sgs.index})
+
+In [9]: avgs
+Out[9]:
+Farva     56.000000
+Foster    95.666667
+Mac       99.333333
+Rabbit    62.333333
+Thorny    90.000000
+Ursula    78.333333
+dtype: float64
+#+END_SRC
+
+Since the ~avgs~ Series has the same index as our ~sgs~ DataFrame, we can simply assign it as a new column:
+
+#+BEGIN_SRC python
+In [11]: sgs['avg'] = avgs
+
+In [12]: sgs
+Out[12]:
+         Exam 1  Exam 2  Exam 3        avg
+Student
+Thorny      100      90      80  90.000000
+Mac          88      99     111  99.333333
+Farva        45      56      67  56.000000
+Rabbit       59      61      67  62.333333
+Ursula       73      79      83  78.333333
+Foster       89      97     101  95.666667
+#+END_SRC
+
+** Rube Goldberg
+
+All those steps to create a Series and concatenate it to a DataFrame can be accomplished with one liine:
+
+#+BEGIN_SRC python
+sgs['Average'] = np.mean([sgs['Exam 1'], sgs['Exam 2'], sgs['Exam 3']], axis=0)
+#+END_SRC
+
+** Appending DataFrames
+
+Now let's add a new row containing the averages for each exam. Again, we'll build this up in steps.
+
+1. Get the average of a single column.
+2. Create a list containing the column averages.
+3. Create a ~pd.DataFrame~ from this dictionary.
+4. Append our new DataFrame with the averages to the ~sgs~ DataFrame.
+
+** Average of a Single Column
+
+We already know how to get the average of a single column's values:
+
+#+BEGIN_SRC python
+In [14]: sgs['Exam 1']
+Out[14]:
+Student
+Thorny    100
+Mac        88
+Farva      45
+Rabbit     59
+Ursula     73
+Foster     89
+Name: Exam 1, dtype: int64
+
+In [15]: np.mean(sgs['Exam 1'])
+Out[15]: 75.666666666666671
+#+END_SRC
+
+The column names are stored in an Index:
+
+#+BEGIN_SRC python
+In [16]: sgs.columns
+Out[16]: Index(['Exam 1', 'Exam 2', 'Exam 3', 'avg'], dtype='object')
+#+END_SRC
+
+
+** Average of all the Columns
+
+We can iterate over the column index to create a dictionary mapping items to dictionaries mapping 'Item Avg' the column average.
+
+#+BEGIN_SRC python
+In [18]: item_avgs = {col: {'Item Avg': np.mean(sgs[col])} for col in sgs.columns}
+
+In [19]: item_avgs
+Out[19]:
+{'Exam 1': {'Item Avg': 75.666666666666671},
+ 'Exam 2': {'Item Avg': 80.333333333333329},
+ 'Exam 3': {'Item Avg': 84.833333333333329},
+ 'avg': {'Item Avg': 80.277777777777771}}
+#+END_SRC
+
+This looks awkward. Remember that:
+
+- A DataFrame is created from a dictionary of dictionaries.
+- The outer dictionary contains the columns with the keys as the column names and the values of the inner dictionaries as the column values.
+- The inner dictionaries have the same keys, which become row index values with the corresponding values from each inner dicionary under the column headed by the key from the corresponding outer dictionary.
+
+** DataFrame from Column Averages
+
+Now that we have this dictionary of dictionaries of column averages, we can create a DataFrame:
+#+BEGIN_SRC python
+In [20]: item_avgs_df = pd.DataFrame(item_avgs)
+
+In [21]: item_avgs_df
+Out[21]:
+             Exam 1     Exam 2     Exam 3        avg
+Item Avg  75.666667  80.333333  84.833333  80.277778
+#+END_SRC
+
+... and then append it to ~sgs~
+
+#+BEGIN_SRC python
+In [24]: sgs = sgs.append(item_avgs_df)
+
+In [25]: sgs
+Out[25]:
+              Exam 1     Exam 2      Exam 3        avg
+Thorny    100.000000  90.000000   80.000000  90.000000
+Mac        88.000000  99.000000  111.000000  99.333333
+Farva      45.000000  56.000000   67.000000  56.000000
+Rabbit     59.000000  61.000000   67.000000  62.333333
+Ursula     73.000000  79.000000   83.000000  78.333333
+Foster     89.000000  97.000000  101.000000  95.666667
+Item Avg   75.666667  80.333333   84.833333  80.277778
+#+END_SRC
+
+Note that ~append~ is non-destructive, so we have to reassign its returned DataFrame to sgs.
+
+** Adding a Letter Grades Column
+
+Adding a column with letter grades is easier than adding a column with a more complex calculation.
+
+#+BEGIN_SRC python
+In [40]: sgs['Grade'] = \
+    ...:     np.where(sgs['avg'] >= 90, 'A',
+    ...:              np.where(sgs['avg'] >= 80, 'B',
+    ...:                       np.where(sgs['avg'] >= 70, 'C',
+    ...:                                np.where(sgs['avg'] >= 60, 'D',
+    ...:                                         'D'))))
+    ...:
+
+In [41]: sgs
+Out[41]:
+              Exam 1     Exam 2      Exam 3        avg Grade
+Thorny    100.000000  90.000000   80.000000  90.000000     A
+Mac        88.000000  99.000000  111.000000  99.333333     A
+Farva      45.000000  56.000000   67.000000  56.000000     D
+Rabbit     59.000000  61.000000   67.000000  62.333333     D
+Ursula     73.000000  79.000000   83.000000  78.333333     C
+Foster     89.000000  97.000000  101.000000  95.666667     A
+Item Avg   75.666667  80.333333   84.833333  80.277778     B
+#+END_SRC
+
+** Grouping and Aggregation
+
+Grouping and aggregation can be conceptualized as a *split, apply, combine* pipeline.
+
+- Split by Grade
+
+#+BEGIN_SRC python
+              Exam 1     Exam 2      Exam 3        avg Grade
+Thorny    100.000000  90.000000   80.000000  90.000000     A
+Mac        88.000000  99.000000  111.000000  99.333333     A
+Foster     89.000000  97.000000  101.000000  95.666667     A
+#+END_SRC
+
+#+BEGIN_SRC python
+              Exam 1     Exam 2      Exam 3        avg Grade
+Item Avg   75.666667  80.333333   84.833333  80.277778     B
+#+END_SRC
+
+#+BEGIN_SRC python
+              Exam 1     Exam 2      Exam 3        avg Grade
+Ursula     73.000000  79.000000   83.000000  78.333333     C
+#+END_SRC
+
+#+BEGIN_SRC python
+              Exam 1     Exam 2      Exam 3        avg Grade
+Farva      45.000000  56.000000   67.000000  56.000000     D
+Rabbit     59.000000  61.000000   67.000000  62.333333     D
+#+END_SRC
+
+- Apply some aggregation function to each group, such as sum, mean, count.
+
+- Combine results of function applications to get final results for each group.
+
+** Letter Grades Counts
+
+Here's how to find the counts of letter grades for our super troopers:
+
+#+BEGIN_SRC python
+In [58]: sgs['Grade'].groupby(sgs['Grade']).count()
+Out[58]:
+Grade
+A    3
+B    1
+C    1
+D    2
+Name: Grade, dtype: int64
+#+END_SRC
+
+
+# ** Data Selection in Series
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Data Selection in DataFrame
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Universal Functions
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Index Alignment
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** UFuncs on DataFrames and Series
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Missing Data
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Hierarchical Indexing
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Concatenating Datasets
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Merging Datasets
+
+# Relational algebra for Pandas DataFrames
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Aggregation
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Grouping
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Pivot Tables
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** String Operations
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+
+# ** Time Series
+
+# #+BEGIN_SRC python
+
+# #+END_SRC
+
+** Messy CSV Files
+
+Remember the [[../exercises/tides.html][Tides Exercise]]? Pandas's ~read_csv~ can handle most of the data pre-processing:
+
+#+BEGIN_SRC python
+pd.read_csv('wpb-tides-2017.txt', sep='\t', skiprows=14, header=None,
+            usecols=[0,1,2,3,5,7],
+            names=['Date', 'Day', 'Time', 'Pred(ft)', 'Pred(cm)', 'High/Low'],
+            parse_dates=['Date','Time'])
+#+END_SRC
+
+Let's use the indexing and data selection techniques we've learned to re-do the  [[../exercises/tides.html][Tides Exercise]] as a Jupyter Notebook. For convenience, ~wpb-tides-2017.txt~ is in the [[https://github.com/cs2316/cs2316.github.io/tree/master/code/analytics][code/analytics]] directory, or you can [[../code/analytics/wpb-tides-2017.txt][download it]].

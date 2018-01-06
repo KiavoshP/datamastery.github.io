@@ -1,0 +1,64 @@
+#+TITLE: Natural Language Processing
+#+AUTHOR:
+#+EMAIL:
+#+DATE:
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS: H:2 toc:nil num:t
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [smaller]
+#+LaTeX_HEADER: \usepackage{verbatim, multicol, tabularx,}
+#+LaTeX_HEADER: \usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
+#+LaTeX_HEADER: \lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\scriptsize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true}
+#+LaTeX_HEADER: \setbeamertemplate{footline}[frame number]
+#+LaTeX_HEADER: \hypersetup{colorlinks=true,urlcolor=blue}
+#+LaTeX_HEADER: \logo{\includegraphics[height=.75cm]{GeorgiaTechLogo-black-gold.png}}
+
+* Natural Language Processing
+
+** Natural Language Processing
+
+- Install tools
+
+#+BEGIN_SRC sh
+$ conda install nltk
+#+END_SRC
+
+** Language
+
+A language is a set of strings.
+
+- Symbols
+  - Lexicon (alphabet)
+- Tokens
+  - Words: strings of symbols
+  - Specified with regular grammar (regular expressions)
+- Sentences
+  - Strings of tokens
+  - Specified with context-free grammar
+
+** Artificial Language
+
+Prescribed by regular and context free grammars.
+
+** Natural Language
+
+Described by regular and context free grammars.
+
+** Symbolic NLP
+
+- Parsing
+
+** Statistical NLP
+
+- N-grams
+- HMMs
+
+** Bag of Words
+
+- Documents as vectors of word counts
+- Document categorization
+- Information retrieval
