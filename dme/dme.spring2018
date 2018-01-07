@@ -1,22 +1,24 @@
+**Python Review**
 Week 1
 2018-01-08;intro-dme
-2018-01-10;intro-python
-2018-01-12;values-variables;;Registration Deadline (2018-01-12)
+2018-01-10;intro-python,values-variables
+2018-01-12;data-structures;;Registration Deadline (2018-01-12)
 Week 2
 2018-01-15;MLK Day - No Class
-2018-01-17;data-structures
-2018-01-19;functions
+2018-01-17;functions
+2018-01-19;modules-programs
 Week 3
-2018-01-22;modules-programs
-2018-01-24;ipython
-2018-01-26;control-structures;;Verification of Participation (Faculty) (2018-01-26)
+2018-01-22;ipython,control-structures
+2018-01-24;control-structures
+2018-01-26;functional-programming;;Verification of Participation (Faculty) (2018-01-26)
 Week 4
-2018-01-29;functional-programming
-2018-01-31;classes-objects
-2018-02-02;review1
+2018-01-29;classes-objects
+2018-01-31;review1
+2018-02-02;exam1
+**Data Formats, Retrieval, and Storage**
 Week 5
-2018-02-05;exam1
-2018-02-07;file-io
+2018-02-05;file-io
+2018-02-07;csv-files
 2018-02-09;csv-files
 Week 6
 2018-02-12;data-exchange-formats
@@ -34,6 +36,7 @@ Week 9
 2018-03-05;python-db-api
 2018-03-07;review2
 2018-03-09;exam2
+**Data Analytics**
 Week 10
 2018-03-12;scipy
 2018-03-14;numpy;;Grade Mode Deadline (2018-03-14),Grade Substitution Deadline (2018-03-14),Withdrawal Deadline (2018-03-14)
@@ -47,16 +50,19 @@ Week 12
 2018-03-28;pandas
 2018-03-30;matplotlib
 Week 13
-2018-04-02;review3
-2018-04-04;exam3
-2018-04-06;python-guis
+2018-04-02;matplotlib
+2018-04-04;review3
+2018-04-06;exam3
+**Python GUIs and Special Topics**
 Week 14
 2018-04-09;python-guis
 2018-04-11;python-guis
-2018-04-13;flask
+2018-04-13;python-guis
 Week 15
-2018-04-16;scikit-learn
-2018-04-18;hadoop
-2018-04-20;spark
+2018-04-16;flask
+2018-04-18;Special Topics
+2018-04-20;Special Topics
 Week 16
-2018-04-23;;;Final Instructional Days (2018-04-23)
+2018-04-23;Review;;Final Instructional Days (2018-04-23)
+Finals
+2018-05-03;14:50 - 17:40
