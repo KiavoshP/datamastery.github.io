@@ -1,12 +1,12 @@
-**Python Review**
+Python Review
 Week 1
-2018-01-08;intro-dme
+2018-01-08;intro-dme;;[HW0 Released 2018-01-08](spring2018/hw0/hw0.html)
 2018-01-10;intro-python,values-variables
 2018-01-12;data-structures;;Registration Deadline (2018-01-12)
 Week 2
 2018-01-15;MLK Day - No Class
 2018-01-17;functions
-2018-01-19;modules-programs
+2018-01-19;modules-programs;;[HW0 Released 2018-01-08](spring2018/hw0/hw0.html)
 Week 3
 2018-01-22;ipython,control-structures
 2018-01-24;control-structures
@@ -15,7 +15,7 @@ Week 4
 2018-01-29;classes-objects
 2018-01-31;review1
 2018-02-02;exam1
-**Data Formats, Retrieval, and Storage**
+Data Formats, Retrieval, and Storage
 Week 5
 2018-02-05;file-io
 2018-02-07;csv-files
@@ -36,7 +36,7 @@ Week 9
 2018-03-05;python-db-api
 2018-03-07;review2
 2018-03-09;exam2
-**Data Analytics**
+Data Analytics
 Week 10
 2018-03-12;scipy
 2018-03-14;numpy;;Grade Mode Deadline (2018-03-14),Grade Substitution Deadline (2018-03-14),Withdrawal Deadline (2018-03-14)
@@ -53,7 +53,7 @@ Week 13
 2018-04-02;matplotlib
 2018-04-04;review3
 2018-04-06;exam3
-**Python GUIs and Special Topics**
+Python GUIs and Special Topics
 Week 14
 2018-04-09;python-guis
 2018-04-11;python-guis
