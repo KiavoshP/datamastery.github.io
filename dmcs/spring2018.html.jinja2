@@ -1,0 +1,60 @@
+---
+layout: dmcs
+title: CS 2803 - Spring 2018
+---
+
+<h1>CS 2803-DMCS Spring 2018</h1>
+
+<h2>Weekly Schedule</h2>
+
+<p>Lectures: Mondays and Wednesdays from 16:30 - 17:45
+<p>Recitations: Thursdays from 18:00 - 19:15 in Molecular Science & Engr 1224</p>
+
+<h2>Lecture Schedule</h2>
+
+<p>
+  Topics link to slides, where available.
+</p>
+
+<p>ITCS means <a href="http://interactivepython.org/runestone/static/thinkcspy/index.html">Interactive Think CS Textbook</a></p>
+<p>IP means <a href="http://shop.oreilly.com/product/0636920028659.do">Introducting Python</a></p>
+<p>TP means Think Python, 2nd Edition, by Allen B. Downey, O'Reilly Media, December 2015. Available free at <a href="http://greenteapress.com/wp/think-python-2e/">http://greenteapress.com/wp/think-python-2e/</a> and from O'Reilly at <a href="http://shop.oreilly.com/product/0636920045267.do">http://shop.oreilly.com/product/0636920045267.do</a></p>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+
+    <thead class="thead-dark">
+      <th>Date</th>
+      <th>Topics</th>
+      <th>Reading and Resources</th>
+      <th>Reminders</th>
+    </thead>
+    {% for row in table %}
+    {% if "internal_header" in row %}
+    <thead class="thead-light"><th colspan="4">{{(row["internal_header"]|markdown)}}</th></thead>
+    {% else %}
+    <tr>
+      <td>{{row["date"]}}</td>
+      <td>
+        {% for item in row["topics"][:-1] %}
+        {{(item|markdown).replace("<p>","").replace("</p>","")}}<br/>
+        {% endfor %}
+        {{(row["topics"][-1]|markdown).replace("<p>","").replace("</p>","")}}
+      </td>
+      <td>
+        {% for item in row["materials"][:-1] %}
+        {{(item|markdown).replace("<p>","").replace("</p>","")}}<br/>
+        {% endfor %}
+        {{(row["materials"][-1]|markdown).replace("<p>","").replace("</p>","")}}
+      </td>
+      <td>
+        {% for item in row["reminders"][:-1] %}
+        {{(item|markdown).replace("<p>","").replace("</p>","")}}<br/>
+        {% endfor %}
+        {{(row["reminders"][-1]|markdown).replace("<p>","").replace("</p>","")}}
+      </td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+</div>

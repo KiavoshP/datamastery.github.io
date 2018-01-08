@@ -28,15 +28,11 @@
     <body>
 
       <!-- Fixed navbar -->
-      <!-- <div class="navbar navbar-default navbar-top-fixed" role="navigation"> -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <!-- <div class="container"> -->
-          <!-- <div class="navbar-header"> -->
           <a class="navbar-brand" href=".">CS 2316 </a>
           <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <!-- </div> -->
           <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item"><a class="nav-link" href="syllabus.html">Syllabus</a></li>
@@ -46,8 +42,22 @@
               <!-- <li class="nav-item"><a class="nav-link" href="ta-info.html">TAs</a></li> -->
               <!-- <li class="nav-item"><a class="nav-link" href="project.html">Project</a></li> -->
             </ul>
+            <ul class="navbar-nav pull-right">
+              <li class="nav-item dropdown">
+                <a href="#" id="dropdown" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Data Mastery Courses <img hspace="25" />
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown">
+                  <a class="dropdown-item" href="../computing/">Computing Basics</a>
+                  <a class="dropdown-item" href="../python/">Python Programming</a>
+                  <a class="dropdown-item" href="../scala/">Scala Programming</a>
+                  <a class="dropdown-item" href="../dme/">Data Manipulation for Engineers</a>
+                  <a class="dropdown-item" href="../dmcs/">Data Manipulation for CS</a>
+                </div>
+              </li>
+            </ul>
           </div>
-        <!-- </div> -->
       </nav>
 
       <main role="main" class="container">
