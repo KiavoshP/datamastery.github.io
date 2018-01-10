@@ -34,19 +34,19 @@
 
 ** Course Web Sites
 
-- T-Square: FERPA-protected information
+- Canvas: FERPA-protected information
 
   - Grades
   - Homework submission
 
-- [[http://cs2316.gatech.edu/][http://cs2316.gatech.edu/]]: everything else
+- [[https://datamastery.github.io/dme/][https://datamastery.github.io/dme/]]: everything else
 
   - Syllabus, schedule, office hours
   - Resources: installing required software, documentation, how-tos, etc.
 
 ** Getting Started
 
-Go to the [[http://cs2316.gatech.edu/resources.html][Resources]] section of the  [[http://cs2316.gatech.edu/][class web site]] and do the steps under "Get Started".
+Go to the [[https://datamastery.github.io/dme/resources.html][Resources]] section of the  [[https://datamastery.github.io/dme/][class web site]] and do the steps under "Get Started".
 
 ** Meet the Teacher(s)
 
