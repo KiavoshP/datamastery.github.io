@@ -1,52 +1,52 @@
 Python Review
 Week 1
-2018-01-08;intro-python,values-variables
-2018-01-10;data-structures
+2018-01-08;"Ice Storm" - No Class
+2018-01-10;intro-python,values-variables;;[HW0 Released 2018-01-10](spring2018/hw0/hw0.html),Registration Deadline (2018-01-12)
 Week 2
 2018-01-15;MLK Day - No Class
-2018-01-17;functions,modules-programs
+2018-01-17;data-structures;;[HW0 Due 2018-01-18](spring2018/hw0/hw0.html)
 Week 3
-2018-01-22;ipython,control-structures
-2018-01-24;functional-programming
+2018-01-22;functions,modules-programs
+2018-01-24;ipython,control-structures;;Verification of Participation (Faculty) (2018-01-26)
 Week 4
-2018-01-29;classes-objects
-2018-01-31;exam1
-Data Formats, Retrieval, Storage, and Delivery
+2018-01-29;functional-programming
+2018-01-31;classes-objects
 Week 5
-2018-02-05;file-io,csv-files
-2018-02-07;data-exchange-formats
+2018-02-05;classes-objects
+2018-02-07;exam1
+Data Formats, Retrieval, Storage, and Delivery
 Week 6
-2018-02-12;html,regular-expressions
-2018-02-14;web-scraping,web-services
+2018-02-12;file-io,csv-files
+2018-02-14;
 Week 7
-2018-02-19;sql-ddl,sql-crud;;Progress Reports Due (Faculty) (2018-02-19)
-2018-02-21;sql-queries
+2018-02-19;data-exchange-formats;;Progress Reports Due (Faculty) (2018-02-19)
+2018-02-21;html,regular-expressions
 Week 8
-2018-02-26;sql-queries,python-db-api
-2018-02-28;flask
+2018-02-26;web-scraping,web-services
+2018-02-28;sql-ddl,sql-crud
 Week 9
-2018-03-05;flask
-2018-03-07;exam2
-Data Analytics, Machine Learning, and Big Data
+2018-03-05;sql-queries
+2018-03-07;sql-queries,python-db-api
 Week 10
-2018-03-12;data-analytics
-2018-03-14;numpy;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
+2018-03-12;flask
+2018-03-14;exam2;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
 Week 11
 2018-03-19;Spring Break - No Class
 2018-03-21;Spring Break - No Class
+Data Analytics, Machine Learning, and Big Data
 Week 12
-2018-03-26;pandas
+2018-03-26;data-analytics,numpy
 2018-03-28;pandas
 Week 13
-2018-04-02;matplotlib
-2018-04-04;scikit-learn
+2018-04-02;pandas
+2018-04-04;matplotlib
 Week 14
 2018-04-09;scikit-learn
-2018-04-11;hadoop
+2018-04-11;scikit-learn
 Week 15
-2018-04-16;spark
+2018-04-16;hadoop,spark
 2018-04-18;exam3
 Week 16
 2018-04-23;Special Topics;;Final Instructional Days (2018-04-23)
 Final Exams
-TBD;(Possibly a Final Project)
+2018-04-27;14:50 - 17:40,(Possibly a Final Project)
