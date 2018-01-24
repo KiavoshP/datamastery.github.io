@@ -19,19 +19,19 @@
         "materials": ["[ITCS - Simple Data](http://interactivepython.org/runestone/static/thinkcspy/SimplePythonData/toctree.html)", "TP 2", "[Video: Values and Variables](https://youtu.be/iKG_hAXy0qQ)"],
         "order": [3]
     },
-    "data-structures": {
-        "topic": "[Data Structures](../slides/python-data-structures.pdf)",
-        "materials": ["[ITCS - Lists](http://interactivepython.org/runestone/static/thinkcspy/Lists/toctree.html)", "[ITCS - Dictionaries](http://interactivepython.org/runestone/static/thinkcspy/Dictionaries/toctree.html)", "TP 10,11,12", "[Video: Data Structures](https://youtu.be/TtAQxtgPOwI)"],
-        "order": [4]
-    },
     "functions": {
         "topic": "[Functions](../slides/python-functions.pdf)",
         "materials": ["[ITCS - Functions](http://interactivepython.org/runestone/static/thinkcspy/Functions/toctree.html)", "[ITCS - Turtles](http://interactivepython.org/runestone/static/thinkcspy/PythonTurtle/toctree.html)", "TP 3"],
-        "order": [5]
+        "order": [4]
     },
     "modules-programs": {
         "topic": "[Modules and Programs](../slides/python-modules-programs.pdf)",
         "materials": ["[ITCS - Modules](http://interactivepython.org/runestone/static/thinkcspy/PythonModules/toctree.html)", "TP 1,14", "[hanglib](../code/hanglib/)", "Exercise: [BMI Module](../exercises/bmi.html)", "Exercise: [Hangman](../exercises/hangman.html)"],
+        "order": [5]
+    },
+    "data-structures": {
+        "topic": "[Data Structures](../slides/python-data-structures.pdf)",
+        "materials": ["[ITCS - Lists](http://interactivepython.org/runestone/static/thinkcspy/Lists/toctree.html)", "[ITCS - Dictionaries](http://interactivepython.org/runestone/static/thinkcspy/Dictionaries/toctree.html)", "TP 10,11,12", "[Video: Data Structures](https://youtu.be/TtAQxtgPOwI)", "Exercise: [Data Utilities](../exercises/data-util.html)"],
         "order": [6]
     },
     "ipython": {
