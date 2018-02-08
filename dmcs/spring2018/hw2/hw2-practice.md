@@ -27,7 +27,7 @@ Notes:
 
 ## Problem Description
 
-You have an exam soon and you want to practice for the exam.
+You need practice manipulating Python data structures.
 
 ## Solution Description
 
