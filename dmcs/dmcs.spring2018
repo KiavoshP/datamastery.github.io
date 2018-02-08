@@ -12,12 +12,12 @@ Week 4
 2018-01-29;ipython,control-structures
 2018-01-31;functional-programming;;[HW1 Due 2018-02-01](spring2018/hw1/hw1-fit.html)
 Week 5
-2018-02-05;classes-objects
-2018-02-07;exam1
+2018-02-05;functional-programming
+2018-02-07;exam1;;[HW2 Released 2018-02-14](spring2018/hw2/hw2-practice.html)
 Data Formats, Retrieval, Storage, and Delivery
 Week 6
-2018-02-12;file-io,csv-files
-2018-02-14;
+2018-02-12;classes-objects
+2018-02-14;file-io,csv-files;;[HW2 Due 2018-02-14](spring2018/hw2/hw2-practice.html)
 Week 7
 2018-02-19;data-exchange-formats;;Progress Reports Due (Faculty) (2018-02-19)
 2018-02-21;html,regular-expressions
@@ -25,8 +25,8 @@ Week 8
 2018-02-26;web-scraping,web-services
 2018-02-28;sql-ddl,sql-crud
 Week 9
-2018-03-05;sql-queries
-2018-03-07;sql-queries,python-db-api
+2018-03-05;sql-queries,python-db-api
+2018-03-07;nosql
 Week 10
 2018-03-12;flask
 2018-03-14;exam2;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
