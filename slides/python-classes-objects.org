@@ -208,6 +208,17 @@ SuperTroopers sorted by mustache, then by name:
 [<Foster :-|>, <Farva :-{>, <Mac :-{>, <Rabbit :-{>, <Thorny :-{>]
 #+END_SRC
 
+** Final Thoughts
+
+Recall the design of the Game of Thrones character types:
+
+- A superclass ~GotCharacter~ with class attributes common to Got characters of all houses.
+- A class for each house, subclassing ~GotCharacter~ and defining the common attributes of all house members.
+  - Each character is an instance of one of these house classes, like ~Lannister~, ~Stark~, etc.
+
+Is this a good design? What if you had an instance of a ~Stark~ and you later found out that they're a ~Targaryen~? Refactor the design of the Got character classes to allow a character to change houses without having to modify the code and re-run the program.
+
+
 ** Conclusion
 
 [[https://www.youtube.com/embed/az5qOjhsang][Magic!]]
