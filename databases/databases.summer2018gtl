@@ -1,67 +1,67 @@
 Week 1
 2018-05-14;Dorm Check-in
 2018-05-15;Orientations
-2018-05-16;
-2018-05-17;
-2018-05-18;
+2018-05-16;intro-cs4400
+2018-05-17;intro-databases
+2018-05-18;database-concepts
 Week 2
 2018-05-21;No Class
-2018-05-22;
-2018-05-23;
-2018-05-24;
-2018-05-25;
+2018-05-22;er-models,Team Formation
+2018-05-23;er-models
+2018-05-24;er-models
+2018-05-25;eer-models
 Week 3
-2018-05-28;
-2018-05-29;
-2018-05-30;
-2018-05-31;
+2018-05-28;eer-models
+2018-05-29;review1
+2018-05-30;exam1
+2018-05-31;conceptual-design-process
 2018-06-01;No Class
 Week 4
-2018-06-04;
-2018-06-05;
-2018-06-06;
-2018-06-07;
+2018-06-04;relational-model
+2018-06-05;relational-model
+2018-06-06;relational-algebra
+2018-06-07;Project Work Day;;**Phase 1 Due**
 2018-06-08;No Class
 Week 5
-2018-06-11;
-2018-06-12;
-2018-06-13;
-2018-06-14;
+2018-06-11;relational-calculus
+2018-06-12;review2
+2018-06-13;exam2
+2018-06-14;er-relational-mapping
 2018-06-15;No Class
 Week 6
-2018-06-18;
-2018-06-19;
-2018-06-20;
-2018-06-21;
-2018-06-22;
+2018-06-18;er-relational-mapping
+2018-06-19;basic-relational-design
+2018-06-20;basic-relational-design
+2018-06-21;Project Work Day;;**Phase 2 Due**
+2018-06-22;sql-ddl
 Week 7
 2018-06-25;No Class
 2018-06-26;No Class
 2018-06-27;No Class
-2018-06-28;
-2018-06-29;
+2018-06-28;sql-crud
+2018-06-29;sql-queries
 Week 8
-2018-07-02;
+2018-07-02;sql-queries
 2018-07-03;Field Trip
-2018-07-04;
-2018-07-05;
-2018-07-06;
+2018-07-04;sql-queries
+2018-07-05;sql-queries
+2018-07-06;sql-advanced
 Week 9
 2018-07-09;No Class
-2018-07-10;
-2018-07-11;
-2018-07-12;
-2018-07-13;
+2018-07-10;sql-advanced
+2018-07-11;relational-design
+2018-07-12;relational-design
+2018-07-13;advanced-relational-design
 Week 10
-2018-07-16;
-2018-07-17;
-2018-07-18;
-2018-07-19;
+2018-07-16;advanced-relational-design
+2018-07-17;review3
+2018-07-18;exam3
+2018-07-19;storage-structures
 2018-07-20;No Class
 Week 11
-2018-07-23;
-2018-07-24;
-2018-07-25;
+2018-07-23;index-structures
+2018-07-24;Special Topics
+2018-07-25;Final Project Demos
 2018-07-26;;;Final Instructional Day
 2018-07-27;Reading Day - No Class
 Finals Week

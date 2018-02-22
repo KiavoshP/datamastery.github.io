@@ -1,68 +1,71 @@
+Python Review
 Week 1
 2018-05-14;Dorm Check-in
 2018-05-15;Orientations
-2018-05-16;
-2018-05-17;
-2018-05-18;
+2018-05-16;intro-dme
+2018-05-17;intro-python
+2018-05-18;values-variables
 Week 2
 2018-05-21;No Class
-2018-05-22;
-2018-05-23;
-2018-05-24;
-2018-05-25;
+2018-05-22;functions
+2018-05-23;modules-programs
+2018-05-24;data-structures
+2018-05-25;data-structures
 Week 3
-2018-05-28;
-2018-05-29;
-2018-05-30;
-2018-05-31;
+2018-05-28;ipython,control-structures
+2018-05-29;control-structures
+2018-05-30;functional-programming
+2018-05-31;functional-programming
 2018-06-01;No Class
 Week 4
-2018-06-04;
-2018-06-05;
-2018-06-06;
+2018-06-04;classes-objects
+2018-06-05;classes-objects
+2018-06-06;exam1
 2018-06-07;
 2018-06-08;No Class
+Data Formats, Retrieval, and Storage
 Week 5
-2018-06-11;
-2018-06-12;
-2018-06-13;
-2018-06-14;
+2018-06-11;file-io,csv-files
+2018-06-12;csv-files
+2018-06-13;data-exchange-formats
+2018-06-14;html
 2018-06-15;No Class
 Week 6
-2018-06-18;
-2018-06-19;
-2018-06-20;
-2018-06-21;
-2018-06-22;
+2018-06-18;regular-expressions
+2018-06-19;web-scraping
+2018-06-20;web-services
+2018-06-21;sql-ddl,sql-crud
+2018-06-22;sql-queries
 Week 7
 2018-06-25;No Class
 2018-06-26;No Class
 2018-06-27;No Class
-2018-06-28;
-2018-06-29;
+2018-06-28;sql-queries
+2018-06-29;sql-queries
 Week 8
-2018-07-02;
+2018-07-02;python-db-api
 2018-07-03;Field Trip
-2018-07-04;
-2018-07-05;
-2018-07-06;
+2018-07-04;review2
+2018-07-05;exam2
+2018-07-06;python-guis
 Week 9
 2018-07-09;No Class
-2018-07-10;
-2018-07-11;
-2018-07-12;
-2018-07-13;
+2018-07-10;python-guis
+2018-07-11;python-guis
+2018-07-12;python-guis
+2018-07-13;python-guis
+Data Analytics
 Week 10
-2018-07-16;
-2018-07-17;
-2018-07-18;
-2018-07-19;
+2018-07-16;numpy
+2018-07-17;numpy
+2018-07-18;pandas
+2018-07-19;pandas
 2018-07-20;No Class
 Week 11
-2018-07-23;
-2018-07-24;
-2018-07-25;
-2018-07-26;;;Final Instructional Day
+2018-07-23;pandas
+2018-07-24;matplotlib
+2018-07-25;Special Topics
+2018-07-26;Special Topics;;Final Instructional Day
 2018-07-27;Reading Day - No Class
 Finals Week
 2018-07-30;
