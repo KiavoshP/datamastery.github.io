@@ -50,7 +50,7 @@ First you need to find the data within the HTML code for a page so you can const
 
 ** Getting the Web Page's HTML Code
 
-To get the HTML code of the web page into a Python string variable that you can play with, use Python's ~urllib.request~ module.
+To get the HTML code of the web page into a Python string variable that you can play with, use Python's ~urllib.request~ module:
 
 #+BEGIN_SRC python
 import urllib.request
@@ -60,6 +60,14 @@ response = urllib.request.urlopen(request)
 page_bytes = response.read()
 page_text = page_bytes.decode()
 # page_text is Python str containing the HTML code
+#+END_SRC
+
+or with the [[http://docs.python-requests.org/en/master/][requests]] module, which is what we'll use:
+
+#+BEGIN_SRC python
+import requests
+resp = requests.get("http://www.openweathermap.com/city/2994160")
+resp.text # the text of the web page
 #+END_SRC
 
 ** Extracting the Data
