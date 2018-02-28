@@ -56,3 +56,7 @@ WFC,WELLS FARGO & COMPANY/MN,6021,NATIONAL COMMERCIAL BANKS,420 MONTGOMERY STREE
 - Use Chrome's Developer Tools or Firefox's Firebug to help you find the HTML elements that contain the data.
 - Most of the elements that contain the data have distinct class attribute values, so you can easily extract their text content with [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) (note that BeautifulSoup refers to elements as `tag`s).
 - You'll need to use a regular expression to extract the sector name.
+
+## Sample Solution
+
+- [company_scraper.py](company_scraper.py)
