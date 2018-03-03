@@ -64,7 +64,7 @@ In addition to the `Candidate` class, include the following functions:
 
 - `rank_behavioral(candidates)` which takes a list of candidates and returns another list with the same elements but sorted in descending order by the candidates' behavioral interview scores.
 
-When the `interns` module is imported as a script it should only make the class and function definitions described above. When the `interns` module is run as a script it should take two mandatory and one optional command line arguments. The first command line argument is the name of a CSV file organized exactly like [academics.csv](academics.csv), the second command line argument is the name of a file organized exactly like [interviews.json](interviews.json), and the third (optional) command line argument is a ranking criterion. The interviews JSON file should contain interview scores for all the students in the academics CSV file. When the script is run without the third command line argument, the students are printed in order as ranked by their composite scores. If the third command line argument is given, it should specify one of the other rank orders from the module functions listed above: academics, technical, or behavioral. If the user supplies a third command line argument that is not one of the specified rank order options, print the students ranked by composite score.
+When the `interns` module is imported as a module it should only make the class and function definitions described above. When the `interns` module is run as a script it should take two mandatory and one optional command line arguments. The first command line argument is the name of a CSV file organized exactly like [academics.csv](academics.csv), the second command line argument is the name of a file organized exactly like [interviews.json](interviews.json), and the third (optional) command line argument is a ranking criterion. The interviews JSON file should contain interview scores for all the students in the academics CSV file. When the script is run without the third command line argument, the students are printed in order as ranked by their composite scores. If the third command line argument is given, it should specify one of the other rank orders from the module functions listed above: academics, technical, or behavioral. If the user supplies a third command line argument that is not one of the specified rank order options, print the students ranked by composite score.
 
 Example script runs:
 
@@ -137,6 +137,15 @@ jrando3         Rando, Jim                   2.0                     4          
 ssmy3           Smy, Samuel                  2.8                     4          4
 jburton3        Burton, Jack                 2.9                     4          3
 ```
+
+Don't worry about ties, and don't worry about error checking.
+
+## Tips and Considerations
+
+- Remember that the data you get fomr a CSV file is textual.
+- What data types do you get from JSON files read by the `json` module?
+- You can do each of the ranking functions in one line.
+- Printing the reports with justification and alignment is easy with string interpolation.
 
 ## Grading
 
