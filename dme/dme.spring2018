@@ -22,7 +22,7 @@ Week 5
 2018-02-09;exam1
 Week 6
 2018-02-12;classes-objects
-2018-02-14;file-io,csv-files;;[HW2 Due 2018-02-14](spring2018/hw2/hw2-practice.html),[HW3 Released 2018-02-14](spring2018/hw3/hw3.html)
+2018-02-14;file-io,csv-files;;[HW2 Due 2018-02-14](spring2018/hw2/hw2-practice.html)
 2018-02-16;csv-files
 Week 7
 2018-02-19;data-exchange-formats;;Progress Reports Due (Faculty) (2018-02-19)
@@ -30,15 +30,15 @@ Week 7
 2018-02-23;regular-expressions
 Week 8
 2018-02-26;web-scraping
-2018-02-28;web-scraping,web-services
-2018-03-02;sql-ddl,sql-crud
+2018-02-28;
+2018-03-02;web-scraping;;[HW3 Released 2018-03-02](spring2018/hw3/hw3-interns.html)
 Week 9
-2018-03-05;sql-queries
+2018-03-05;web-services,sql-ddl,sql-crud
 2018-03-07;sql-queries
-2018-03-09;python-db-api
+2018-03-09;sql-queries,python-db-api
 Data Analytics
 Week 10
-2018-03-12;review2
+2018-03-12;review2;;[HW3 Due 2018-03-12](spring2018/hw3/hw3-interns.html)
 2018-03-14;exam2;;Grade Mode Deadline (2018-03-14),Grade Substitution Deadline (2018-03-14),Withdrawal Deadline (2018-03-14)
 2018-03-16;scipy
 Week 11
