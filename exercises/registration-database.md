@@ -72,7 +72,7 @@ Write a SQL script that populates the following data:
 
 #### Enrolled
 
-| dept_id | course_id | student_id |
+| dept_id | coruse_id | student_id |
 |---------+-----------+------------|
 | CS | 101 | 11 |
 | Math | 101 | 11 |

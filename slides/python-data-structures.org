@@ -136,7 +136,8 @@ False
 
 #+BEGIN_SRC python
 >>> girls = ['Wendy', 'Annie', 'Bebe', 'Heidi']
->>> boys + girls
+>>> kids = boys + girls
+>>> kids
 ['Stan', 'Kyle', 'Cartman', 'Kenny', 'Wendy', 'Annie', 'Bebe', 'Heidi']
 #+END_SRC
 
@@ -154,10 +155,10 @@ Python provides several built-in functions that take list parameters.
 - ~len(xs)~ returns the number of elements in the list ~xs~ (more generally, the sequence ~xs~)
 
 #+BEGIN_SRC python
->>> boys
-['Stan', 'Kyle', 'Cartman', 'Kenny']
->>> len(boys)
-4
+>>> kids
+['Stan', 'Kyle', 'Cartman', 'Kenny', 'Wendy', 'Annie', 'Bebe', 'Heidi']
+>>> len(kids)
+8
 #+END_SRC
 
 - ~min(xs)~ returns the least element of ~xs~, ~max(xs)~ returns the greatest
@@ -169,7 +170,7 @@ Python provides several built-in functions that take list parameters.
 9
 #+END_SRC
 
-- What is ~min(boys)~?
+- What is ~min(kids)~?
 
 ** The ~del~ Statement
 

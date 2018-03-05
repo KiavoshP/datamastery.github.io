@@ -18,7 +18,7 @@ You work for the housing department of a major university and want to analyze in
 
 ## Solution Description
 
-1. Download [dorms-schema.sql](dorms-schema.sql) and [dorms-data.sql](dorms-data.sql)
+1. Download [dorms-schema.sql](../resources/dorms-schema.sql) and [dorms-data.sql](../resources/dorms-data.sql)
 2. On the command line, go to the directory where you downloaded the dorms database scripts.
 3. If on macOS, make sure your MySQL server is running:
 
@@ -86,7 +86,3 @@ mysql> describe dorm;
 - Which students are in Armstrong?
 - Rank students by GPA.
 - Which student has the top GPA?
-
-## Sample Answers
-
-- [dorms-queries.sql](dorms-queries.sql)

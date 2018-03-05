@@ -1,0 +1,129 @@
+% Created 2018-02-28 Wed 13:35
+\documentclass[smaller]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{verbatim, multicol, tabularx,color}
+\usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
+\lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\scriptsize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true, keywordstyle=\bf}
+\setbeamertemplate{footline}[frame number]
+\hypersetup{colorlinks=true,urlcolor=blue}
+\logo{\includegraphics[height=.75cm]{GeorgiaTechLogo-black-gold.png}}
+\usetheme{default}
+\author{}
+\date{}
+\title{Web Scraping}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 25.3.3 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+
+\section{Web Scraping}
+\label{sec-1}
+
+\begin{frame}[label=sec-1-1]{Web Scraping}
+Two ways to mine data from the web
+
+\begin{itemize}
+\item The hard way, by web scraping
+\item The easy way, using web service APIs
+\end{itemize}
+
+We’ll see examples of both.
+\end{frame}
+
+\begin{frame}[label=sec-1-2]{Web Scraping}
+Web scraping, a.k.a. screen scraping, means getting data from a web page. Suppose we want to get the current wind data for a city from \href{http://openweathermap.org/}{Open Weather Map}.
+
+\includegraphics[width=.9\linewidth]{weather-city.png}
+\end{frame}
+
+\begin{frame}[label=sec-1-3]{What is a Web Page?}
+A web page is a chunk of text containing HTML code. The browser "renders" the HTML graphically. So web scraping means analyzing text using Python's text processing features.
+
+\includegraphics[width=.9\linewidth]{weather-city-html.png}
+\end{frame}
+
+
+\begin{frame}[label=sec-1-4]{Finding The Data On the Page}
+First you need to find the data within the HTML code for a page so you can construct a regex. Your browser's developer features can help you find the data:
+
+\includegraphics[width=.9\linewidth]{weather-city-devtools.png}
+\end{frame}
+
+
+\begin{frame}[fragile,label=sec-1-5]{Getting the Web Page's HTML Code}
+ To get the HTML code of the web page into a Python string variable that you can play with, use Python's \verb~urllib.request~ module:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+import urllib.request
+# 2994160 is the city code for Metz, FR
+request = urllib.request.Request("http://www.openweathermap.com/city/2994160")
+response = urllib.request.urlopen(request)
+page_bytes = response.read()
+page_text = page_bytes.decode()
+# page_text is Python str containing the HTML code
+\end{lstlisting}
+
+or with the \href{http://docs.python-requests.org/en/master/}{requests} module, which is what we'll use:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+import requests
+resp = requests.get("http://www.openweathermap.com/city/2994160")
+resp.text # the text of the web page
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-6]{Extracting the Data}
+ Looks like the wind data is in the second \verb~<td>~ element after the \verb~<div class="weather-widget">~ tag, following a \verb~<td>Wind</td>~ element. We can play around with the HTML text in the Python REPL. We eventually end up with:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+wind = re.findall(r'<td>Wind</td><td>(.+?)</td>', page_text.replace("\n",""))[0]
+\end{lstlisting}
+
+Notice that we used a capture group to get the element data.
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-7]{Aside: Parsing HTML}
+ HTML is context free language, which roughly means that it supports arbitrary nesting of elements. For example, you could have arbitrarily nested \verb~div~ elements with "leaf" elements containing text data, e.g.:
+
+\lstset{language=HTML,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+<div>
+    <div>
+        <div>some text</div>
+    </div>
+</div>
+\end{lstlisting}
+
+By the rules of HTML, you could nest \verb~div~ tags as deeply as you want.
+
+Regular expressions match regular laguages, which don't support arbitrary nesting. So how can we use regexes to "parse" HTML?
+\end{frame}
+
+\begin{frame}[label=sec-1-8]{Regex Matching in HTML Code}
+Parsing means scanning the linear sequence of symbols in a string to determine its structure (usually by putting the symbols in a tree).
+
+We don't need to parse HTML to find data on a web page. While the HTML \alert{language} supports arbitrary nesting, a particular web page will be nested to a particular depth, resulting a simple linear sequence of symbols that we can match with a regular expression.
+\end{frame}
+% Emacs 25.3.3 (Org mode 8.2.10)
+\end{document}

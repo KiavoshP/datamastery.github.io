@@ -1,0 +1,265 @@
+% Created 2018-02-12 Mon 13:40
+\documentclass[smaller]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\usepackage{verbatim, multicol, tabularx,color}
+\usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
+\lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\scriptsize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true, keywordstyle=\bf}
+\setbeamertemplate{footline}[frame number]
+\hypersetup{colorlinks=true,urlcolor=blue}
+\logo{\includegraphics[height=.75cm]{GeorgiaTechLogo-black-gold.png}}
+\usetheme{default}
+\author{}
+\date{}
+\title{Classes and Objects}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 25.3.3 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+
+\section{Classes and Objects}
+\label{sec-1}
+
+\begin{frame}[fragile,label=sec-1-1]{Python is Object-Oriented}
+ Every value in Python is an object, meaning an instance of a class. Even values that are considered "primitive" in some other languages.
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+>>> type(1)
+<class 'int'>
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,label=sec-1-2]{Class Definitions}
+ \lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class <class_name>(<superclasses>):
+    <body>
+\end{lstlisting}
+
+\begin{itemize}
+\item \verb~<class_name>~ is an identifier
+\item \verb~<superclasses>~ is a comma-separated list of superclasses. Can be empty, in which case \verb~object~ is implicit superclass
+\item \verb~<body>~ is a non-empty sequence of statements
+\end{itemize}
+
+A class definition creates a class object in much the same way that a function definition creates a function object.
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-3]{Class Attributes}
+ \lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class Stark:
+    creator = "George R.R. Martin"
+    words = "Winter is coming"
+    sigil = "Direwolf"
+    home = "Winterfell"
+
+    def __init__(self, name=None):
+        self.name = name if name else "No one"
+
+    def full_name(self):
+        return "{} Stark".format(self.name)
+\end{lstlisting}
+
+\verb~creator~, \verb~words~, \verb~sigil~, and \verb~home~ are \alert{class attributes}. Class attributes belong to the class and are shared by all instances
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-4]{Instance Attributes}
+ \lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class Stark:
+    creator = "George R.R. Martin"
+    words = "Winter is coming"
+    sigil = "Direwolf"
+    home = "Winterfell"
+
+    def __init__(self, name=None):
+        self.name = name if name else "No one"
+
+    def full_name(self):
+        return "{} Stark".format(self.name)
+\end{lstlisting}
+
+\begin{itemize}
+\item \verb~self.name~ is an instance attribute becuase it is prefaced with \verb~self.~ and defined in a method that has a first parameter named \verb~self~. Each instance of the class has its own copies of instance attributes.
+\item \verb~full_name~ is an instance method because it defined in a class and has at least one parameter. The first parameter is implicitly a reference to the instance on which a method is called.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-5]{Classes and Objects}
+ In this example, \verb~ned~ and \verb~robb~ are \alert{instances} of \verb~Stark~. Each instance has it's own \verb~name~.
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+>>> import got
+>>> ned = got.Stark("Eddard")
+>>> ned.name
+'Eddard'
+>>> robb = got.Stark("Robb")
+>>> robb.name
+'Robb'
+\end{lstlisting}
+
+Ivoking the \verb~full_name()~ method on an object implicitly passes the object as the first argument (\verb~self~), which you could (but shoudn't) do explicitly:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+>>> ned.full_name()          # This is normal
+'Eddard Stark'
+>>> got.Stark.full_name(ned) # This is only instructive
+'Eddard Stark'
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-6]{Class Members}
+ Each instance shares the class attributes \verb~creator~, \verb~words~, \verb~sigil~, and \verb~home~.
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+>>> got.Stark.sigil
+'Direwolf'
+>>> ned.sigil
+'Direwolf'
+>>> robb.sigil
+'Direwolf'
+\end{lstlisting}
+
+Remember that the \verb~is~ operator returns \verb~True~ if its operands reference the same object in memory. So this deomonstrates that \verb~sigil~ is shared between the \verb~Stark~ class and all instances of the \verb~Stark~ class:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+>>> got.Stark.sigil is ned.sigil
+True
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile,label=sec-1-7]{Superclasses}
+ Superclasses, or parent classes, or base classes, define attributes that you wish to be common to a family of objects.
+
+Notice that all of our noble houses have the same creator, and every instance has a name. We can represent this commonality by creating a base class for all house classes:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class GotCharacter:
+    creator = "George R.R. Martin"
+
+    def __init__(self, name=None):
+        self.name = name if name else "No one"
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-8]{Refactored \verb~Stark~}
+ Here is \verb~Stark~ refactored to use the \verb~GotCharacter~ superclass:
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class Stark(GotCharacter):
+    words = "Winter is coming"
+    sigil = "Direwolf"
+    home = "Winterfell"
+
+    def __init__(self, name):
+        # This is how you invoke a superclass method
+        super().__init__(name)
+\end{lstlisting}
+
+Exercise: refactor the other GoT houses to use the \verb~GotCharacter~ superclass.
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-9]{Magic, a.k.a., Dunder Methods}
+ Methods with names that begin and end with \verb~__~
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+class SuperTrooper(Trooper):
+
+    def __init__(self, name, is_mustached):
+        super().__init__(name)
+        self.is_mustached = is_mustached
+
+    # Used by print()
+    def __str__(self):
+        return "<{} {}>".format(self.name, ":-{" if self.is_mustached else ":-|")
+
+    # Used by REPL
+    def __repr__(self):
+        return str(self)
+
+    # Makes instances of SuperTrooper orderable
+    def __lt__(self, other):
+        if self.is_mustached and not other.is_mustached:
+            return False
+        elif not self.is_mustached and other.is_mustached:
+            return True
+        else:
+            return self.name < other.name
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-10]{Sortable SuperTroopers}
+ With the definition of \verb~__lt__(self, other)~ in \verb~SuperTrooper~, a list of \verb~SuperTrooper~ is sortable.
+
+\lstset{language=Python,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+sts = [SuperTrooper("Thorny", True),
+       SuperTrooper("Mac", True),
+       SuperTrooper("Rabbit", True),
+       SuperTrooper("Farva", True),
+       SuperTrooper("Foster", False)]
+print("SuperTroopers:")
+print(sts)
+print("SuperTroopers sorted by mustache, then by name:")
+print(sorted(sts))
+\end{lstlisting}
+
+Produces:
+
+\lstset{language=sh,label= ,caption= ,numbers=none}
+\begin{lstlisting}
+SuperTroopers:
+[<Thorny :-{>, <Mac :-{>, <Rabbit :-{>, <Farva :-{>, <Foster :-|>]
+SuperTroopers sorted by mustache, then by name:
+[<Foster :-|>, <Farva :-{>, <Mac :-{>, <Rabbit :-{>, <Thorny :-{>]
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-1-11]{Final Thoughts}
+ Recall the design of the Game of Thrones character types:
+
+\begin{itemize}
+\item A superclass \verb~GotCharacter~ with class attributes common to Got characters of all houses.
+\item A class for each house, subclassing \verb~GotCharacter~ and defining the common attributes of all house members.
+\begin{itemize}
+\item Each character is an instance of one of these house classes, like \verb~Lannister~, \verb~Stark~, etc.
+\end{itemize}
+\end{itemize}
+
+Is this a good design? What if you had an instance of a \verb~Stark~ and you later found out that they're a \verb~Targaryen~? Refactor the design of the Got character classes to allow a character to change houses without having to modify the code and re-run the program.
+\end{frame}
+
+
+\begin{frame}[label=sec-1-12]{Conclusion}
+\href{https://www.youtube.com/embed/az5qOjhsang}{Magic!}
+\end{frame}
+% Emacs 25.3.3 (Org mode 8.2.10)
+\end{document}
