@@ -23,12 +23,12 @@ Week 7
 2018-02-21;html,regular-expressions
 Week 8
 2018-02-26;web-scraping,web-services
-2018-02-28;sql-ddl,sql-crud
+2018-02-28;web-scraping,web-services
 Week 9
-2018-03-05;sql-queries,python-db-api
-2018-03-07;nosql
+2018-03-05;relational-databases,sql-ddl,sql-crud
+2018-03-07;sql-queries,python-db-api
 Week 10
-2018-03-12;flask
+2018-03-12;nosql
 2018-03-14;exam2;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
 Week 11
 2018-03-19;Spring Break - No Class
