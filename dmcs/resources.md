@@ -54,6 +54,10 @@ that will give you the basic skills you need for this class should you choose to
 - [Python Style Guide](http://legacy.python.org/dev/peps/pep-0008/)
 - Jay Summet's previous [CS 2316 class web sites](http://www.cc.gatech.edu/~summetj/teaching.html#cs2316)
 
+## Learn About Tools Used in Data Manipulation
+
+- [MySQL](mysql.html)
+
 ## Enrolled in Modern Physics 2?
 
 If you're enrolled in Modern Physics 2 and need to run VPython for Physics, then you'll need to manage a Python 2 installation for Physics and Python3 for CS 2316. You can manage two Python version using [conda environments](http://conda.pydata.org/docs/using/envs.html). To set it up, do this at the command line:
