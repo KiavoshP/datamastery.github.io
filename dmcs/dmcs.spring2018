@@ -28,14 +28,14 @@ Week 9
 2018-03-05;relational-databases,sql-ddl,sql-crud
 2018-03-07;sql-queries,python-db-api
 Week 10
-2018-03-12;nosql
-2018-03-14;exam2;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
+2018-03-12;sql-queries,python-db-api;;[HW3 Released 2018-03-12](spring2018/hw3/hw3-doctorbase.html)
+2018-03-14;nosql,flask;;Grade Mode Deadline (2018-03-14), Grade Substitution Deadline (2018-03-14), Withdrawal Deadline (2018-03-14)
 Week 11
 2018-03-19;Spring Break - No Class
 2018-03-21;Spring Break - No Class
 Data Analytics, Machine Learning, and Big Data
 Week 12
-2018-03-26;data-analytics,numpy
+2018-03-26;data-analytics,numpy;;[HW3 Due 2018-03-27](spring2018/hw3/hw3-doctorbase.html)
 2018-03-28;pandas
 Week 13
 2018-04-02;pandas
