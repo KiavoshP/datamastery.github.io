@@ -12,7 +12,7 @@ def index():
             course, term = course_term.split('_')
             courses.append((course, term))
     print(courses)
-    return render_template('index.html', courses=courses)
+    return render_template('index.html.jinja2', courses=courses)
 
 @app.route('/grades/<course>/<term>')
 def gradebook(course, term):
@@ -22,7 +22,7 @@ def gradebook(course, term):
         reader = csv.reader(fin)
         for record in reader:
             rows.append(record)
-    return render_template('grades.html', course=course, term=term, rows=rows)
+    return render_template('grades.html.jinja2', course=course, term=term, rows=rows)
 
 if __name__ == '__main__':
     app.run(debug=True)
