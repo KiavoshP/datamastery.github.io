@@ -10,6 +10,9 @@
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [smaller]
+#+LaTeX_HEADER: \usepackage[utf8]{inputenc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \DeclareUnicodeCharacter{9E75}{\ifmmode\pm\else\textpm\fi}
 #+LaTeX_HEADER: \usepackage{verbatim, multicol, tabularx,}
 #+LaTeX_HEADER: \usepackage{amsmath,amsthm, amssymb, latexsym, listings, qtree}
 #+LaTeX_HEADER: \lstset{frame=tb, aboveskip=1mm, belowskip=0mm, showstringspaces=false, columns=flexible, basicstyle={\scriptsize\ttfamily}, numbers=left, frame=single, breaklines=true, breakatwhitespace=true}
@@ -24,7 +27,7 @@
 Provides efficient storage and operations on dense data buffers, i.e., arrays.
 
 - ~ndarray~ is the fundamental object
-- Vectorized (no loop) operations on arrays
+- Vectorized operations on arrays
 - Broadcasting
 - File IO amd memory-mapped files
 
@@ -37,15 +40,15 @@ In [1]: import numpy as np
 Arrays have elements of homogeneous data type
 
 #+BEGIN_SRC python
-In [2]: nums = [1, 2, 3.14]
+In [2]: a = np.array([1, 2, 3.14])
 
-In [3]: nums
-Out[3]: [1, 2, 3.14]
+In [3]: type(a)
+Out[3]: numpy.ndarray
 
-In [4]: np.array(nums)
+In [4]: a
 Out[4]: array([ 1.  ,  2.  ,  3.14])
 
-In [5]: type(Out[4][0])
+In [5]: type(a[0])
 Out[5]: numpy.float64
 #+END_SRC
 
@@ -228,6 +231,7 @@ In [54]: a3[2, :]
 Out[54]: array([7, 8, 9])
 #+END_SRC
 
+Notice that first index is row, second index is column.
 
 ** Array Reshaping
 
@@ -258,10 +262,42 @@ array([[ 1,  2,  3],
 
 # #+END_SRC
 
-** Universal Functions: Vectorized Operations on Arrays
+** Python is slow
+
+- Consider an array representing pixels of a "one megapixel" image:
+
+#+BEGIN_SRC python
+In [20]: image = np.random.randint(0, 256, (1000000, 3))
+#+END_SRC
+
+- This is a deep underwater image which looks very green and we want to increase the "blueness" by 10% [fn:1]. So we write a function to mutiply pixel elements by a factor:
+
+#+BEGIN_SRC python
+In [60]: def mult_elem(image, n, factor):
+    ...:     for i in range(len(image)):
+    ...:         image[i][n] = image[i][n] * factor
+#+END_SRC
+
+- This operation is /slow/:
+
+#+BEGIN_SRC python
+In [61]: %timeit mult_elem(image, 2, 1.10)
+1.85 s +/- 16.8 ms per loop (mean +/- std. dev. of 7 runs, 1 loop each)
+#+END_SRC
+
+- The equivalent vectorized opertation is /300 times faster/:
+
+#+BEGIN_SRC python
+In [62]: %timeit image[:, 2] = image[:, 2] * 1.10
+6.23 ms +/- .0693 ms per loop (mean +/- std. dev. of 7 runs, 100 loops each)
+#+END_SRC
 
 
-Operations between like-shaped arrays are /vectorized/, that is, the loop that applies the operations to the elements of the arrays elementwise is pushed into the compiled C-code layer instead of Python. For example:
+[fn:1] I'm not a graphics guy, so just indulge me here.
+
+** Vectorized Operations on Arrays
+
+Operations between compatibly-shaped arrays or between arrays and scalars are /vectorized/, that is, the loop that applies the operations to the elements of the arrays is pushed into the compiled C-code layer instead of Python. For example:
 
 #+BEGIN_SRC python
 In [114]: np.arange(2, 20, 2) / np.arange(1, 10)
@@ -272,9 +308,6 @@ When arrays don't have the same shape, the smaller array is "broadcast" across t
 
 #+BEGIN_SRC python
 In [108]: a = np.arange(9)
-
-In [109]: a
-Out[109]: array([0, 1, 2, 3, 4, 5, 6, 7, 8])
 
 In [110]: 2 ** a
 Out[110]: array([  1,   2,   4,   8,  16,  32,  64, 128, 256])
@@ -304,25 +337,37 @@ Out[120]: 9
 
 ** 2-D Aggregations
 
+Given:
 #+BEGIN_SRC python
 In [131]: np.arange(9).reshape(3,3)
 Out[131]:
 array([[0, 1, 2],
        [3, 4, 5],
        [6, 7, 8]])
+#+END_SRC
 
+We can summarize the values of each column,
+
+#+BEGIN_SRC python
 In [132]: np.arange(9).reshape(3,3).min(axis=0)
 Out[132]: array([0, 1, 2])
 
 In [133]: np.arange(9).reshape(3,3).max(axis=0)
 Out[133]: array([6, 7, 8])
+#+END_SRC
 
+or summarize the values in each row:
+
+#+BEGIN_SRC python
 In [134]: np.arange(9).reshape(3,3).min(axis=1)
 Out[134]: array([0, 3, 6])
 
 In [135]: np.arange(9).reshape(3,3).max(axis=1)
 Out[135]: array([2, 5, 8])
 #+END_SRC
+
+Note that *axis* here means /dimension to be collapsed/. So axis 0 means we collapse the rows into one array by aplying the aggregation function by column.
+
 
 ** Boolean Operations
 
@@ -437,6 +482,17 @@ array([[ 1,  4,  3],
 #+END_SRC
 
 Exercise: do that operation above using basic Python on a list of lists.
+
+** Closing Thoughts
+
+Key ideas of NumPy:
+
+- In-memory arrays of elements with the same data type
+- Static typing of arrays together with vectorized operations of universal functions provide dramatic speed up over equivalent Python code
+- Ufuncs combined with with boolean masks makes it easy to partition data
+- Aggregate functions make it easy to summarize data
+
+NumPy is the foundation of the SciPy stack. Even when we don't use it directly (which we often will), it's there underneath the hood.
 
 # ** Fancy Indexing
 
