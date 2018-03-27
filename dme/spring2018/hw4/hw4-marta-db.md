@@ -70,7 +70,7 @@ Create a database to make it convenient to answer certain kinds of questions and
 - Your program will be run in the following manner:
 
 ```sh
-$ python import_marta_data.py passenger_data.csv marta localhost root
+$ python import_marta.py passenger_data.csv marta localhost root
 Password for root@localhost:
 Importing data from passenger_data.csv into marta database on localhost...
 Done.
