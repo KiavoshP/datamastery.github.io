@@ -35,18 +35,18 @@ Week 11
 2018-03-21;Spring Break - No Class
 Data Analytics, Machine Learning, and Big Data
 Week 12
-2018-03-26;data-analytics,numpy;;[HW3 Due 2018-03-27](spring2018/hw3/hw3-doctorbase.html)
-2018-03-28;pandas
+2018-03-26;scipy,numpy
+2018-03-28;pandas;;[HW3 Due 2018-03-29](spring2018/hw3/hw3-doctorbase.html)
 Week 13
 2018-04-02;pandas
 2018-04-04;matplotlib
 Week 14
-2018-04-09;scikit-learn
+2018-04-09;nlp
 2018-04-11;scikit-learn
 Week 15
-2018-04-16;hadoop,spark
+2018-04-16;tensorflow
 2018-04-18;exam3
 Week 16
-2018-04-23;Special Topics;;Final Instructional Days (2018-04-23)
+2018-04-23;hadoop,spark;;Final Instructional Days (2018-04-23)
 Final Exams
 2018-04-27;14:50 - 17:40,(Possibly a Final Project)
