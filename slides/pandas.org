@@ -198,9 +198,42 @@ Software Engineer         101000
 dtype: int64
 #+END_SRC
 
-** DataFrame
+** Basic DataFrame Structure
 
-The simplest way to create a DataFrame is with a dictionary of dictionaries:
+A DataFrame is a series Serieses with the same keys. For example, consider the following dictionary of dictionaries meant to leverage your experience with spreadsheets (in [[http://datamastery.github.io/code/analytics/spreadsheet.py][spreadsheet.py]]):
+
+#+BEGIN_SRC python
+In [5]: import spreadsheet; spreadsheet.cells
+
+Out[5]:
+{'A': {1: 'A1', 2: 'A2', 3: 'A3'},
+ 'B': {1: 'B1', 2: 'B2', 3: 'B3'},
+ 'C': {1: 'C1', 2: 'C2', 3: 'C3'},
+ 'D': {1: 'D1', 2: 'D2', 3: 'D3'}}
+#+END_SRC
+
+All of these dictionaries have the same keys, so we can pass this dictionary of dictionaries to the DataFrame constructor:
+
+#+BEGIN_SRC python
+In [7]: ss = pd.DataFrame(spreadsheet.cells); ss
+
+Out[7]:
+    A   B   C   D
+1  A1  B1  C1  D1
+2  A2  B2  C2  D2
+3  A3  B3  C3  D3
+#+END_SRC
+
+- Each column is a Series whose keys (index) are the values printed to the left (1, 2 and 3).
+
+- Each row is a Series whose keys (index) are the column headers.
+
+Try evaluating ~ss.columns~ and ~ss.index~.
+
+** DataFrame Example
+
+Download [[http://datamastery.github.io/code/analytics/hotjobs.py][hotjobs.py]] and do a ~%load hotjobs.py~ (to evaluate the code in the top-level namespace instead of importing it).
+
 #+BEGIN_SRC python
 In [42]: jobs = pd.DataFrame({'salary': salary, 'openings': openings})
 
@@ -329,38 +362,61 @@ Software Architect      2232  125000
 Software Engineer      17085  101000
 #+END_SRC
 
+** Aggregate Functions
+
+The values in a series is a ~numpy.ndarray~, so you can use NumPy functions, broadcasting, etc.
+
+- Average salary for all these jobs:
+
+#+BEGIN_SRC python
+In [14]: np.average(jobs['salary'])
+Out[14]: 107125.0
+#+END_SRC
+
+- Total number of openings:
+
+#+BEGIN_SRC python
+In [15]: np.sum(jobs['openings'])
+Out[15]: 34930
+#+END_SRC
+
+And so on.
+
 ** Adding Columns
 
-Add column by broadcasting a single value:
+Add column by broadcasting a constant value:
 #+BEGIN_SRC python
-In [23]: jobs['CS2316 prepares'] = True
-Out[23]:
-                        openings  salary 2316 Prepares
-Analytics Manager           1958  112000          True
-Data Engineer               2599  106000          True
-Data Scientist              4184  110000          True
-Database Administrator      2877   93000          True
-DevOps Engineer             2725  110000          True
-Software Architect          2232  125000          True
-Software Engineer          17085  101000          True
-Supply Chain Manager        1270  100000          True
+In [16]: jobs['DM Prepares'] = True
+
+In [17]: jobs
+Out[17]:
+                        openings  salary  DM Prepares
+Analytics Manager           1958  112000         True
+Data Engineer               2599  106000         True
+Data Scientist              4184  110000         True
+Database Administrator      2877   93000         True
+DevOps Engineer             2725  110000         True
+Software Architect          2232  125000         True
+Software Engineer          17085  101000         True
+Supply Chain Manager        1270  100000         True
 #+END_SRC
 
 Add column by computing value based on row's data:
-#+BEGIN_SRC python
-In [24]: jobs['6 Figures'] = jobs['salary'] > 100000
 
-In [25]: jobs
-Out[25]:
-                        openings  salary 2316 Prepares 6 Figures
-Analytics Manager           1958  112000          True      True
-Data Engineer               2599  106000          True      True
-Data Scientist              4184  110000          True      True
-Database Administrator      2877   93000          True     False
-DevOps Engineer             2725  110000          True      True
-Software Architect          2232  125000          True      True
-Software Engineer          17085  101000          True      True
-Supply Chain Manager        1270  100000          True     False
+#+BEGIN_SRC python
+In [25]: jobs['Percent Openings'] = jobs['openings'] / np.sum(jobs['openings'])
+
+In [26]: jobs
+Out[26]:
+                        openings  salary  DM Prepares  Percent Openings
+Analytics Manager           1958  112000         True          0.056055
+Data Engineer               2599  106000         True          0.074406
+Data Scientist              4184  110000         True          0.119782
+Database Administrator      2877   93000         True          0.082365
+DevOps Engineer             2725  110000         True          0.078013
+Software Architect          2232  125000         True          0.063899
+Software Engineer          17085  101000         True          0.489121
+Supply Chain Manager        1270  100000         True          0.036358
 #+END_SRC
 
 ** CSV Files
@@ -371,7 +427,7 @@ Pandas has a very powerful CSV reader. Do this in iPython (or ~help(pd.read_csv)
 pd.read_csv?
 #+END_SRC
 
-Now let's read the [[http://cs2316.gatech.edu/exercises/super-grades.csv][~super-grades.csv~]] file and re-do [[http://cs2316.gatech.edu/exercises/calc-grades.html][Calc Grades]] exercise using Pandas.
+Now let's read the [[http://datamastery.github.io/exercises/super-grades.csv][~super-grades.csv~]] file and re-do [[http://datamastery.github.io/exercises/calc-grades.html][Calc Grades]] exercise using Pandas.
 
 
 ** Read a CSV File into a DataFrame
@@ -410,69 +466,30 @@ Ursula       73      79      83
 Foster       89      97     101
 #+END_SRC
 
-** Adding a Column to a DataFrame
+** Adding a Calculated Column to a DataFrame
 
-We've seen how to add a column broadcast from a scalar value or a simple calculation from another column. Now let's add a column with the average grades for each student. We'll build this up in 3 steps:
+We've seen how to add a column broadcast from a scalar value or a simple calculation from another column. Now let's add a column with the average grades for each student.
 
-1. Find the average of a single student's grades.
-2. Create a dictionary mapping all students to their averages.
-3. Create a ~pd.Series~ object from this dictionary.
-4. Add this dictionary to our ~sgs~ ~pd.DataFrame~.
-
-** Operating on a Row of a DataFrame
-
-We already know how to find the average of a single student's grades:
+If we apply this to the DataFrame we get a Series with averages. Notice that we're "collapsing" columns (axis=1), that is, calculating values from a row like we did in NumPy:
 
 #+BEGIN_SRC python
-In [5]: np.mean(sgs.loc['Thorny'])
-Out[5]: 90.0
-#+END_SRC
-
-~Thorny~ is one of the row (~loc~) indexes. We get all the row index values with:
-
-#+BEGIN_SRC python
-In [6]: sgs.index
-Out[6]: Index(['Thorny', 'Mac', 'Farva', 'Rabbit', 'Ursula', 'Foster'], dtype='object', name='Student')
-#+END_SRC
-
-We can iterate over the index values and create a dictionary mapping all students to their averages.
-
-#+BEGIN_SRC python
-In [7]: {stud: np.mean(sgs.loc[stud]) for stud in sgs.index}
-Out[7]:
-{'Farva': 56.0,
- 'Foster': 95.666666666666671,
- 'Mac': 99.333333333333329,
- 'Rabbit': 62.333333333333336,
- 'Thorny': 90.0,
- 'Ursula': 78.333333333333329}
-#+END_SRC
-
-** Concatenate a Series to a DataFrame
-
-Now that we know how to create a dictionay of student averages, we create a ~pd.Series~ object from it so we can concatenate the Series to our DataFrame.
-
-#+BEGIN_SRC python
-In [8]: avgs = pd.Series({stud: np.mean(sgs.loc[stud]) for stud in sgs.index})
-
-In [9]: avgs
-Out[9]:
-Farva     56.000000
-Foster    95.666667
-Mac       99.333333
-Rabbit    62.333333
+In [33]: sgs.apply(course_avg, axis=1)
+Out[33]:
+Student
 Thorny    90.000000
+Mac       99.333333
+Farva     56.000000
+Rabbit    62.333333
 Ursula    78.333333
+Foster    95.666667
 dtype: float64
 #+END_SRC
 
-Since the ~avgs~ Series has the same index as our ~sgs~ DataFrame, we can simply assign it as a new column:
+So we just add this series to the DataFrame:
 
 #+BEGIN_SRC python
-In [11]: sgs['avg'] = avgs
-
-In [12]: sgs
-Out[12]:
+In [35]: sgs["avg"] = sgs.apply(course_avg, axis=1); sgs
+Out[35]:
          Exam 1  Exam 2  Exam 3        avg
 Student
 Thorny      100      90      80  90.000000
@@ -483,88 +500,51 @@ Ursula       73      79      83  78.333333
 Foster       89      97     101  95.666667
 #+END_SRC
 
-** Rube Goldberg
-
-All those steps to create a Series and concatenate it to a DataFrame can be accomplished with one liine:
-
-#+BEGIN_SRC python
-sgs['Average'] = np.mean([sgs['Exam 1'], sgs['Exam 2'], sgs['Exam 3']], axis=0)
-#+END_SRC
-
 ** Appending DataFrames
 
-Now let's add a new row containing the averages for each exam. Again, we'll build this up in steps.
+Now let's add a new row containing the averages for each exam.
 
-1. Get the average of a single column.
-2. Create a list containing the column averages.
-3. Create a ~pd.DataFrame~ from this dictionary.
-4. Append our new DataFrame with the averages to the ~sgs~ DataFrame.
-
-** Average of a Single Column
-
-We already know how to get the average of a single column's values:
+- We can get the item averages by applying ~np.mean~ to the columns (axis=0 -- "collapsing" rows):
 
 #+BEGIN_SRC python
-In [14]: sgs['Exam 1']
-Out[14]:
-Student
-Thorny    100
-Mac        88
-Farva      45
-Rabbit     59
-Ursula     73
-Foster     89
-Name: Exam 1, dtype: int64
-
-In [15]: np.mean(sgs['Exam 1'])
-Out[15]: 75.666666666666671
+In [35]: sgs.apply(np.mean, axis=0)
+Out[35]:
+Exam 1    75.666667
+Exam 2    80.333333
+Exam 3    84.833333
+avg       80.277778
+dtype: float64
 #+END_SRC
 
-The column names are stored in an Index:
+- We can turn this Series into a DaraFrame with the label we want:
 
 #+BEGIN_SRC python
-In [16]: sgs.columns
-Out[16]: Index(['Exam 1', 'Exam 2', 'Exam 3', 'avg'], dtype='object')
+In [38]: pd.DataFrame({"ItemAverage": sgs.apply(np.mean, axis=0)})
+Out[38]:
+        ItemAverage
+Exam 1    75.666667
+Exam 2    80.333333
+Exam 3    84.833333
+avg       80.277778
 #+END_SRC
 
+** DataFrame Transpose
 
-** Average of all the Columns
-
-We can iterate over the column index to create a dictionary mapping items to dictionaries mapping 'Item Avg' the column average.
+- But we need to give this DataFrame the same shape as our grades DataFrame:
 
 #+BEGIN_SRC python
-In [18]: item_avgs = {col: {'Item Avg': np.mean(sgs[col])} for col in sgs.columns}
+In [41]: item_avgs = pd.DataFrame({"Item Avg": sgs.apply(np.mean, axis=0)}).transpose()
 
-In [19]: item_avgs
-Out[19]:
-{'Exam 1': {'Item Avg': 75.666666666666671},
- 'Exam 2': {'Item Avg': 80.333333333333329},
- 'Exam 3': {'Item Avg': 84.833333333333329},
- 'avg': {'Item Avg': 80.277777777777771}}
-#+END_SRC
-
-This looks awkward. Remember that:
-
-- A DataFrame is created from a dictionary of dictionaries.
-- The outer dictionary contains the columns with the keys as the column names and the values of the inner dictionaries as the column values.
-- The inner dictionaries have the same keys, which become row index values with the corresponding values from each inner dicionary under the column headed by the key from the corresponding outer dictionary.
-
-** DataFrame from Column Averages
-
-Now that we have this dictionary of dictionaries of column averages, we can create a DataFrame:
-#+BEGIN_SRC python
-In [20]: item_avgs_df = pd.DataFrame(item_avgs)
-
-In [21]: item_avgs_df
-Out[21]:
+In [43]: item_avgs
+Out[43]:
              Exam 1     Exam 2     Exam 3        avg
 Item Avg  75.666667  80.333333  84.833333  80.277778
 #+END_SRC
 
-... and then append it to ~sgs~
+Then we can simply append the DataFrame because it has the same columns:
 
 #+BEGIN_SRC python
-In [24]: sgs = sgs.append(item_avgs_df)
+In [24]: sgs = sgs.append(item_avgs)
 
 In [25]: sgs
 Out[25]:
